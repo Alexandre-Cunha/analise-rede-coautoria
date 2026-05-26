@@ -1,3 +1,5 @@
+import os
+
 '''função que lê um arquivo de texto e extrai os autores de cada linha,  armazenando-os em uma lista de publicações.
 Cada linha do arquivo é esperada estar no formato "autor1; autor2; autor3", onde os autores são separados por ponto e vírgula.
 A função lida com possíveis erros, como o arquivo não ser encontrado ou outros erros de leitura,
@@ -44,3 +46,38 @@ def gerar_pares(publicacao):
 
     return pares
 
+'''Função responsável por construir um grafo não direcionado ponderado, onde o peso da aresta
+entre dois pesquisadores é o número de publicações em que eles
+aparecem juntos '''
+def criar_grafo(publicacoes):
+    grafo = {}
+
+    for publicacao in publicacoes:
+        pares = gerar_pares(publicacao)
+
+        for autor1, autor2 in pares:
+
+            # Cria o nó do autor1 naquela iteração caso ele não exista no grafo 
+            if autor1 not in grafo:
+                grafo[autor1] = {}
+            # Cria o nó do autor2 naquela iteração caso ele não exista no grafo
+            if autor2 not in grafo:
+                grafo[autor2] = {}
+            # Cria a aresta entre o autor1 e autor2 
+            if autor2 not in grafo[autor1]:
+                grafo[autor1][autor2] = 0
+            # Cria a aresta entre o autor2 e autor1
+            if autor1 not in grafo[autor1]:
+                grafo[autor2][autor1] = 0
+
+            # Como na Teoria dos Grafos os dois sentidos existem,
+            # deve se adicionar o peso nos dois sentidos para que o Grafo seja consistente 
+            grafo[autor1][autor2] += 1
+            grafo[autor2][autor1] += 1 
+
+    return grafo
+
+
+#Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente 
+def limpar_terminal():
+    os.system("cls" if os.name == "nt" else "clear")
