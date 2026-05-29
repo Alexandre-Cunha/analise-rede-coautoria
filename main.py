@@ -1,12 +1,5 @@
-from functions import carregar_arquivo, gerar_pares, criar_grafo, limpar_terminal
+from functions import menu, carregar_arquivo, gerar_pares, criar_grafo, limpar_terminal, conta_pesquisadores, conta_arestas
 
-'''função que exibe um menu para o usuáro com opções de funcionalidades do programa'''
-def menu():
-    print("\n ======== MENU ========")
-    print("1. Carregar arquivo de publicações")
-    print("2. Gerar pares de autores")
-    print("3. Criar Grafo")
-    print("0. Sair")
 
 while True:
     menu()
@@ -16,6 +9,7 @@ while True:
         try: 
             nome_arquivo = input("Digite o nome do arquivo: ")
             publicacoes = carregar_arquivo(nome_arquivo)
+            print("\nArquivo carregado com sucesso!")
         except Exception as e:
             print(f"Ocorreu um erro: {e}")
 
@@ -23,7 +17,7 @@ while True:
         try:
             for publicacao in publicacoes:
                 pares = gerar_pares(publicacao)
-            print("Pares de autores gerados com sucesso.")
+            print("\nPares de autores gerados com sucesso.")
             
         except Exception as e:
             print(f"Ocorreu um erro: {e}")
@@ -34,6 +28,14 @@ while True:
             print(f"\n {autor}")
             for vizinho, peso in grafo[autor].items():
                 print(f"   └── {vizinho} | peso: {peso}")
+
+    elif opcao == "4":
+        grafo = criar_grafo(publicacoes)
+        print(f"\nExistem {conta_pesquisadores(grafo)} pesquisadores na rede.")
+
+    elif opcao == "5":
+        grafo = criar_grafo(publicacoes)
+        print(f"\nExistem {conta_arestas(grafo)} arestas distintas na rede.")
 
     elif opcao == "0":
         print("Saindo...")

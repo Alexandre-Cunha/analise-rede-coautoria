@@ -77,7 +77,34 @@ def criar_grafo(publicacoes):
 
     return grafo
 
+# Função responsável por contar quantos pesquisadores existem no grafo, ela conta quantas chaves existem no dicionário.
+def conta_pesquisadores(grafo):
+    return len(grafo)
 
-#Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente 
+'''Funcão responsável por contar a quantidade de arestas do Grafo, como temos um grafo não direcionado temos que tartar as arestas
+para evitar duplicatas, por isso usamos set() e tuple(sorted()).
+'''
+def conta_arestas(grafo):
+    arestas = set() # O set cria uma coleção de valores únicos, ou seja não aceita duplicatas 
+
+    for autor in grafo:
+        for vizinho in grafo[autor]:
+            aresta = tuple(sorted([autor, vizinho]))
+            arestas.add(aresta)
+
+    return len(arestas)
+
+
+#Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
     os.system("cls" if os.name == "nt" else "clear")
+
+'''função que exibe um menu para o usuáro com opções de funcionalidades do programa'''
+def menu():
+    print("\n ======== MENU ========")
+    print("1. Carregar arquivo de publicações")
+    print("2. Gerar pares de autores")
+    print("3. Criar Grafo")
+    print("4. Contar Pesquisadores")
+    print("5. Contar Arestas")
+    print("0. Sair")
