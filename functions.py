@@ -67,7 +67,7 @@ def criar_grafo(publicacoes):
             if autor2 not in grafo[autor1]:
                 grafo[autor1][autor2] = 0
             # Cria a aresta entre o autor2 e autor1
-            if autor1 not in grafo[autor1]:
+            if autor1 not in grafo[autor2]:
                 grafo[autor2][autor1] = 0
 
             # Como na Teoria dos Grafos os dois sentidos existem,
@@ -94,6 +94,18 @@ def conta_arestas(grafo):
 
     return len(arestas)
 
+''' Função responsável por exibir as métricas Grau e Peso Total. O Grau é o número de vizinhos de cada nó do grafo 
+e Peso Total é  a soma dos pesos das arestas conectadas a cada nó.'''
+def calcular_metricas(grafo):
+    metricas = {}
+
+    for pesquisador in grafo:
+        metricas[pesquisador] = {
+            "grau": len(grafo[pesquisador]),
+            "peso_total": sum(grafo[pesquisador].values())
+        }
+
+    return metricas
 
 #Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
@@ -103,8 +115,7 @@ def limpar_terminal():
 def menu():
     print("\n ======== MENU ========")
     print("1. Carregar arquivo de publicações")
-    print("2. Gerar pares de autores")
-    print("3. Criar Grafo")
-    print("4. Contar Pesquisadores")
-    print("5. Contar Arestas")
+    print("2. Exibir Grafo")
+    print("3. Estatísticas")
+    print("4. Exibir Métricas dos Pesquisadores")
     print("0. Sair")

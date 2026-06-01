@@ -1,48 +1,56 @@
-from functions import menu, carregar_arquivo, gerar_pares, criar_grafo, limpar_terminal, conta_pesquisadores, conta_arestas
+from functions import menu, carregar_arquivo, criar_grafo, limpar_terminal, conta_pesquisadores, conta_arestas, calcular_metricas
 
+publicacoes = None
+grafo = None
 
 while True:
     menu()
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
-        try: 
             nome_arquivo = input("Digite o nome do arquivo: ")
             publicacoes = carregar_arquivo(nome_arquivo)
-            print("\nArquivo carregado com sucesso!")
-        except Exception as e:
-            print(f"Ocorreu um erro: {e}")
+
+            if publicacoes:
+                grafo = criar_grafo(publicacoes)
+                print("\nArquivo carregado com sucesso!")
+            else:
+                print("\nNenhuma publicação foi carregada.")
 
     elif opcao == "2":
-        try:
-            for publicacao in publicacoes:
-                pares = gerar_pares(publicacao)
-            print("\nPares de autores gerados com sucesso.")
-            
-        except Exception as e:
-            print(f"Ocorreu um erro: {e}")
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
 
-    elif opcao == "3":
-        grafo = criar_grafo(publicacoes)
-        for autor in grafo:
+        for autor in sorted(grafo):            
             print(f"\n {autor}")
-            for vizinho, peso in grafo[autor].items():
+            for vizinho, peso in sorted(grafo[autor].items()):
                 print(f"   └── {vizinho} | peso: {peso}")
 
+    elif opcao == "3":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+        
+        print("\n ===== ESTATÍSTICAS =====")
+        print(f"Pesquisadores: {conta_pesquisadores(grafo)}")
+        print(f"Arestas Distintas: {conta_arestas(grafo)}")
+
     elif opcao == "4":
-        grafo = criar_grafo(publicacoes)
-        print(f"\nExistem {conta_pesquisadores(grafo)} pesquisadores na rede.")
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
 
-    elif opcao == "5":
-        grafo = criar_grafo(publicacoes)
-        print(f"\nExistem {conta_arestas(grafo)} arestas distintas na rede.")
-
+        metricas = calcular_metricas(grafo)
+        print("\n ===== MÉTRICAS =====")
+        for pesquisador, dados in sorted(metricas.items(), key=lambda item: item[1]["grau"],reverse=True):
+            print(f'\n{pesquisador}')
+            print(f"Grau: {dados['grau']}")
+            print(f"Peso Total:  {dados['peso_total']}\n")
+        
     elif opcao == "0":
         print("Saindo...")
         limpar_terminal()
         exit()
     else:
         print("Opção inválida. Tente novamente.")
-
-if __name__ == "__main__":
-    menu()
