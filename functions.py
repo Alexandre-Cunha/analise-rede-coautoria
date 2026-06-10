@@ -102,10 +102,36 @@ def calcular_metricas(grafo):
     for pesquisador in grafo:
         metricas[pesquisador] = {
             "grau": len(grafo[pesquisador]),
-            "peso_total": sum(grafo[pesquisador].values())
+            "peso_total": sum(grafo[pesquisador].values()) 
         }
 
     return metricas
+
+'''Função responsável por encontrar os HUBS da rede, HUBS são os nós com maior número de conexões diretas, 
+ou seja HUBS são os nós com maior quantidade de arestas'''
+def encontrar_hubs(metricas):
+    maior_grau = max(dados["grau"] for dados in metricas.values())
+
+    hubs = []
+
+    for pesquisador, dados in metricas.items():
+        if dados["grau"] == maior_grau:
+            hubs.append(pesquisador)
+
+    return hubs, maior_grau
+
+'''Função responsável por encontrar os pesquisadores mais influentes, para um pesquisador ser o mais influente,
+a soma do peso de suas arestas devem ser maior que a soma dos demais pesquisadoes'''
+def encontrar_mais_influente(metricas):
+    maior_peso = max(dados["peso_total"] for dados in metricas.values())
+
+    influentes = []
+
+    for pesquisador, dados in metricas.items():
+        if dados["peso_total"] == maior_peso:
+            influentes.append(pesquisador)
+
+    return influentes, maior_peso
 
 #Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
@@ -118,4 +144,6 @@ def menu():
     print("2. Exibir Grafo")
     print("3. Estatísticas")
     print("4. Exibir Métricas dos Pesquisadores")
+    print("5. Encontrar HUB da rede")
+    print("6. Pesquisadores mais Influentes")
     print("0. Sair")

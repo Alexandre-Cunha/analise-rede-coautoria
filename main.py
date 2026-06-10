@@ -1,18 +1,20 @@
-from functions import menu, carregar_arquivo, criar_grafo, limpar_terminal, conta_pesquisadores, conta_arestas, calcular_metricas
+import functions as fn
 
 publicacoes = None
 grafo = None
+metricas = None
 
 while True:
-    menu()
+    fn.menu()
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
             nome_arquivo = input("Digite o nome do arquivo: ")
-            publicacoes = carregar_arquivo(nome_arquivo)
+            publicacoes = fn.carregar_arquivo(nome_arquivo)
 
             if publicacoes:
-                grafo = criar_grafo(publicacoes)
+                grafo = fn.criar_grafo(publicacoes)
+                metricas = fn.calcular_metricas(grafo)
                 print("\nArquivo carregado com sucesso!")
             else:
                 print("\nNenhuma publicação foi carregada.")
@@ -33,24 +35,50 @@ while True:
             continue
         
         print("\n ===== ESTATÍSTICAS =====")
-        print(f"Pesquisadores: {conta_pesquisadores(grafo)}")
-        print(f"Arestas Distintas: {conta_arestas(grafo)}")
+        print(f"Pesquisadores: {fn.conta_pesquisadores(grafo)}")
+        print(f"Arestas Distintas: {fn.conta_arestas(grafo)}")
 
     elif opcao == "4":
         if grafo is None:
             print("Carregue um arquivo primeiro.")
             continue
 
-        metricas = calcular_metricas(grafo)
         print("\n ===== MÉTRICAS =====")
         for pesquisador, dados in sorted(metricas.items(), key=lambda item: item[1]["grau"],reverse=True):
             print(f'\n{pesquisador}')
             print(f"Grau: {dados['grau']}")
             print(f"Peso Total:  {dados['peso_total']}\n")
+
+    elif opcao == "5":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+
+        hubs, grau = fn.encontrar_hubs(metricas)
+
+        print("\n===== HUBS DA REDE =====")
+
+        for i, hub in enumerate(hubs, start=1):
+            print(f"{i}. {hub}")
+
+        print(f"\nMaior grau encontrado: {grau}")
         
+    elif opcao == "6":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+        
+        influentes, peso = fn.encontrar_mais_influente(metricas)
+
+        print("\n===== PESQUISADORES MAIS INFLUENTES =====\n")
+
+        for pesquisador in influentes:
+            print(f'Pesquisador: {pesquisador}')
+        print(f"\nPeso Total: {peso}")
+
     elif opcao == "0":
         print("Saindo...")
-        limpar_terminal()
+        fn.limpar_terminal()
         exit()
     else:
         print("Opção inválida. Tente novamente.")
