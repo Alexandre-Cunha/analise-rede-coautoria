@@ -37,6 +37,7 @@ while True:
         print("\n ===== ESTATÍSTICAS =====")
         print(f"Pesquisadores: {fn.conta_pesquisadores(grafo)}")
         print(f"Arestas Distintas: {fn.conta_arestas(grafo)}")
+        print(f"Coeficiente de Agrupamento Médio: {fn.coeficiente_agrupamento_medio(grafo):.2f}")
 
     elif opcao == "4":
         if grafo is None:

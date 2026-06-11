@@ -81,7 +81,7 @@ def criar_grafo(publicacoes):
 def conta_pesquisadores(grafo):
     return len(grafo)
 
-'''Funcão responsável por contar a quantidade de arestas do Grafo, como temos um grafo não direcionado temos que tartar as arestas
+'''Funcão responsável por contar a quantidade de arestas do Grafo, como temos um grafo não direcionado temos que tratar as arestas
 para evitar duplicatas, por isso usamos set() e tuple(sorted()).
 '''
 def conta_arestas(grafo):
@@ -133,6 +133,25 @@ def encontrar_mais_influente(metricas):
 
     return influentes, maior_peso
 
+'''Função responsável por calcular o coeficiente de agrupamento médio da rede.
+O cálculo é realizado pela média dos pesos das arestas do grafo, conforme
+definido no enunciado do trabalho. Como o grafo é não direcionado, as arestas
+são tratadas de forma única para evitar duplicidades. O valor retornado
+representa a média de publicações por colaboração entre pesquisadores.'''
+def coeficiente_agrupamento_medio(grafo):
+    arestas = set() # O set cria uma coleção de valores únicos, ou seja não aceita duplicatas 
+    soma_pesos = 0
+
+    for autor in grafo:
+        for vizinho, peso in grafo[autor].items():
+            aresta = tuple(sorted([autor, vizinho]))
+
+            if aresta not in arestas:
+                arestas.add(aresta)
+                soma_pesos += peso 
+
+    return soma_pesos / len(arestas)
+
 #Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
     os.system("cls" if os.name == "nt" else "clear")
@@ -144,6 +163,6 @@ def menu():
     print("2. Exibir Grafo")
     print("3. Estatísticas")
     print("4. Exibir Métricas dos Pesquisadores")
-    print("5. Encontrar HUB da rede")
+    print("5. Encontrar HUBs da rede")
     print("6. Pesquisadores mais Influentes")
     print("0. Sair")
