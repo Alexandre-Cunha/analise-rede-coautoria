@@ -87,7 +87,24 @@ while True:
         print("\n===== DISTÂNCIAS =====")
         print(f"Distância Média: {dist_media:.2f}")
         print(f"Diâmetro: {diametro}")
-        
+
+    elif opcao == "8":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+
+        comunidades = fn.encontrar_comunidades(grafo)
+
+        print("\n===== COMUNIDADES =====")
+
+        for i, comunidade in enumerate(comunidades, start=1):
+
+            print(f"\nComunidade {i}:")
+            print(f"Quantidade de pesquisadores: {len(comunidade)}")
+
+            for pesquisador in sorted(comunidade):
+                print(f"  • {pesquisador}")
+
 
     elif opcao == "0":
         print("Saindo...")

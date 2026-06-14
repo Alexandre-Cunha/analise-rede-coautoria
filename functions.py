@@ -194,20 +194,15 @@ def calcular_distancia_media_diametro(grafo):
     pesquisadores = list(grafo.keys())
 
     for i in range(len(pesquisadores)):
-
         pesquisador = pesquisadores[i]
-
         distancias = bfs(grafo, pesquisador)
 
         for j in range(i + 1, len(pesquisadores)):
-
             outro = pesquisadores[j]
-
             if outro not in distancias:
                 continue
 
             distancia = distancias[outro]
-
             soma_distancias += distancia
             quantidade_pares += 1
 
@@ -217,6 +212,30 @@ def calcular_distancia_media_diametro(grafo):
     distancia_media = soma_distancias / quantidade_pares
 
     return distancia_media, diametro
+
+
+def dfs(grafo, pesquisador, visitados, comunidade):
+
+    visitados.add(pesquisador)
+    comunidade.append(pesquisador)
+
+    for vizinho in grafo[pesquisador]:
+
+        if vizinho not in visitados:
+            dfs(grafo, vizinho, visitados, comunidade)
+
+def encontrar_comunidades(grafo):
+    visitados = set()
+    comunidades = []
+
+    for pesquisador in grafo:
+        if pesquisador not in visitados:
+            comunidade = []
+            dfs(grafo, pesquisador, visitados, comunidade)
+            comunidades.append(comunidade)
+
+    return comunidades
+
 
 #Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
@@ -232,4 +251,5 @@ def menu():
     print("5. Encontrar HUBs da rede")
     print("6. Pesquisadores mais Influentes")
     print("7. Distância Média e Diâmetro")
+    print("8. Análise de Comunidades")
     print("0. Sair")
