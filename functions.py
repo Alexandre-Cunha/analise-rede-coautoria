@@ -213,7 +213,14 @@ def calcular_distancia_media_diametro(grafo):
 
     return distancia_media, diametro
 
+'''Função que realiza uma Busca em Profundidade (DFS) a partir de um pesquisador.
+A DFS percorre recursivamente todos os pesquisadores alcançáveis a partir do
+pesquisador inicial, visitando seus vizinhos e os vizinhos dos vizinhos até que
+não existam mais vértices não visitados.
 
+Os pesquisadores visitados são armazenados no conjunto 'visitados' para evitar
+revisitas e ciclos, enquanto os integrantes da comunidade encontrada são
+armazenados na lista 'comunidade'.'''
 def dfs(grafo, pesquisador, visitados, comunidade):
 
     visitados.add(pesquisador)
@@ -224,6 +231,14 @@ def dfs(grafo, pesquisador, visitados, comunidade):
         if vizinho not in visitados:
             dfs(grafo, vizinho, visitados, comunidade)
 
+'''Função responsável por identificar as comunidades da rede de coautoria.
+Uma comunidade é representada por um componente conexo do grafo, ou seja,
+um grupo de pesquisadores que possuem algum caminho de colaboração entre si.
+
+A função percorre todos os pesquisadores da rede e, para cada pesquisador
+ainda não visitado, executa uma Busca em Profundidade (DFS) para encontrar
+todos os membros de sua comunidade. Ao final, retorna uma lista contendo
+todas as comunidades identificadas no grafo.'''
 def encontrar_comunidades(grafo):
     visitados = set()
     comunidades = []
@@ -241,6 +256,68 @@ def encontrar_comunidades(grafo):
 def limpar_terminal():
     os.system("cls" if os.name == "nt" else "clear")
 
+'''Função responsável por gerar um relatório em formato Markdown
+com as principais informações e métricas da rede de coautoria,
+como estatísticas gerais, HUBs, pesquisadores mais influentes
+e comunidades encontradas.'''
+def gerar_relatorio_md(grafo, metricas):
+
+    hubs, grau_hub = encontrar_hubs(metricas)
+    influentes, peso_influente = encontrar_mais_influente(metricas)
+
+    distancia_media, diametro = calcular_distancia_media_diametro(grafo)
+
+    comunidades = encontrar_comunidades(grafo)
+
+    with open("relatorio.md", "w", encoding="utf-8") as arquivo:
+
+        arquivo.write("# Relatório de Análise da Rede de Coautoria\n\n")
+
+        arquivo.write("## Estatísticas Gerais\n\n")
+
+        arquivo.write(f"- **Pesquisadores:** {conta_pesquisadores(grafo)}\n")
+        arquivo.write(f"- **Arestas Distintas:** {conta_arestas(grafo)}\n")
+        arquivo.write(
+            f"- **Coeficiente de Agrupamento Médio:** "
+            f"{coeficiente_agrupamento_medio(grafo):.2f}\n\n"
+        )
+
+        arquivo.write("## Distâncias na Rede\n\n")
+
+        arquivo.write(f"- **Distância Média:** {distancia_media:.2f}\n")
+        arquivo.write(f"- **Diâmetro:** {diametro}\n\n")
+
+        arquivo.write("## HUBs da Rede\n\n")
+
+        for hub in hubs:
+            arquivo.write(f"- {hub}\n")
+
+        arquivo.write(f"\n**Maior grau encontrado:** {grau_hub}\n\n")
+
+        arquivo.write("## Pesquisadores Mais Influentes\n\n")
+
+        for pesquisador in influentes:
+            arquivo.write(f"- {pesquisador}\n")
+
+        arquivo.write(f"\n**Peso total:** {peso_influente}\n\n")
+
+        arquivo.write("## Comunidades Encontradas\n\n")
+
+        for i, comunidade in enumerate(comunidades, start=1):
+
+            arquivo.write(
+                f"### Comunidade {i} "
+                f"({len(comunidade)} pesquisadores)\n\n"
+            )
+
+            for pesquisador in sorted(comunidade):
+                arquivo.write(f"- {pesquisador}\n")
+
+            arquivo.write("\n")
+
+    print("\nRelatório gerado com sucesso!")
+    print("Arquivo salvo como relatorio.md")
+
 '''função que exibe um menu para o usuáro com opções de funcionalidades do programa'''
 def menu():
     print("\n ======== MENU ========")
@@ -252,4 +329,6 @@ def menu():
     print("6. Pesquisadores mais Influentes")
     print("7. Distância Média e Diâmetro")
     print("8. Análise de Comunidades")
+    print("9. 9. Análise da Distribuição dos Graus e Gráfico")
+    print("10. Gerar Relátorio")
     print("0. Sair")

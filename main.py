@@ -1,4 +1,5 @@
 import functions as fn
+import analise_rede as ar
 
 publicacoes = None
 grafo = None
@@ -104,7 +105,26 @@ while True:
 
             for pesquisador in sorted(comunidade):
                 print(f"  • {pesquisador}")
+    
+    elif opcao == "9":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
 
+        frequencias = ar.distribuicao_graus(grafo)
+
+        print("\n===== DISTRIBUIÇÃO DE GRAUS =====")
+
+        for grau, freq in sorted(frequencias.items()):
+            print(f"Grau {grau}: {freq} pesquisadores")
+
+        ar.plotar_distribuicao_graus(frequencias)
+    
+    elif opcao == "10":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+        fn.gerar_relatorio_md(grafo, metricas)
 
     elif opcao == "0":
         print("Saindo...")
