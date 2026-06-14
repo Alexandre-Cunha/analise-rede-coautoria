@@ -77,6 +77,18 @@ while True:
             print(f'Pesquisador: {pesquisador}')
         print(f"\nPeso Total: {peso}")
 
+    elif opcao == "7":
+        if grafo is None:
+            print("Carregue um arquivo primeiro.")
+            continue
+        
+        dist_media, diametro = (fn.calcular_distancia_media_diametro(grafo))
+
+        print("\n===== DISTÂNCIAS =====")
+        print(f"Distância Média: {dist_media:.2f}")
+        print(f"Diâmetro: {diametro}")
+        
+
     elif opcao == "0":
         print("Saindo...")
         fn.limpar_terminal()

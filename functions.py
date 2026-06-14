@@ -1,4 +1,5 @@
 import os
+from collections import deque
 
 '''função que lê um arquivo de texto e extrai os autores de cada linha,  armazenando-os em uma lista de publicações.
 Cada linha do arquivo é esperada estar no formato "autor1; autor2; autor3", onde os autores são separados por ponto e vírgula.
@@ -152,6 +153,71 @@ def coeficiente_agrupamento_medio(grafo):
 
     return soma_pesos / len(arestas)
 
+'''Função que realiza uma Busca em Largura (BFS) a partir de um pesquisador de origem.
+A BFS percorre o grafo explorando primeiro os pesquisadores mais próximos da origem,
+calculando a menor distância em número de arestas até cada pesquisador alcançável.
+
+A função retorna um dicionário onde as chaves são os pesquisadores visitados
+e os valores representam a distância mínima da origem até cada um deles.'''
+def bfs(grafo, origem):
+    fila = deque([origem])
+    distancias = {
+        origem: 0 
+    }
+
+    while fila:
+        atual = fila.popleft()
+
+        for vizinho in grafo[atual]:
+            if  vizinho not in distancias:
+                distancias[vizinho] = (distancias[atual] + 1)
+                fila.append(vizinho)
+
+    return distancias
+
+'''Função responsável por calcular a distância média e o diâmetro da rede.
+Para cada pesquisador da rede, é executada uma Busca em Largura (BFS) para
+obter as menores distâncias até os demais pesquisadores.
+
+A distância média é calculada pela média das menores distâncias entre todos
+os pares de pesquisadores conectados. O diâmetro corresponde à maior dessas
+distâncias, representando o maior menor caminho encontrado na rede.
+
+Como a rede pode possuir componentes desconexos, pares de pesquisadores sem
+caminho entre si são ignorados no cálculo.'''
+def calcular_distancia_media_diametro(grafo):
+
+    soma_distancias = 0
+    quantidade_pares = 0
+    diametro = 0
+
+    pesquisadores = list(grafo.keys())
+
+    for i in range(len(pesquisadores)):
+
+        pesquisador = pesquisadores[i]
+
+        distancias = bfs(grafo, pesquisador)
+
+        for j in range(i + 1, len(pesquisadores)):
+
+            outro = pesquisadores[j]
+
+            if outro not in distancias:
+                continue
+
+            distancia = distancias[outro]
+
+            soma_distancias += distancia
+            quantidade_pares += 1
+
+            if distancia > diametro:
+                diametro = distancia
+
+    distancia_media = soma_distancias / quantidade_pares
+
+    return distancia_media, diametro
+
 #Função para limpar o terminal, ela verifica qual S.O o usuário está utilizando e usa o comando do S.O correspondente. 
 def limpar_terminal():
     os.system("cls" if os.name == "nt" else "clear")
@@ -165,4 +231,5 @@ def menu():
     print("4. Exibir Métricas dos Pesquisadores")
     print("5. Encontrar HUBs da rede")
     print("6. Pesquisadores mais Influentes")
+    print("7. Distância Média e Diâmetro")
     print("0. Sair")
