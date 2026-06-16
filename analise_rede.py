@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 '''Função responsável por calcular a distribuição dos graus da rede.
 Ela conta quantos pesquisadores possuem cada valor de grau e
@@ -18,10 +19,15 @@ def distribuicao_graus(grafo):
 
     return frequencias
 
+def gerar_timestamp():
+    return datetime.now().strftime("%Y%m%d_%H%M%S")
+
 '''Função responsável por gerar um gráfico de barras da distribuição
 dos graus da rede. O eixo x representa os graus dos pesquisadores
 e o eixo y representa a frequência de cada grau.'''
-def plotar_distribuicao_graus(frequencias):
+def plotar_distribuicao_graus(frequencias, nome_rede):
+
+    nome_arquivo = (f"resultados/distribuicao_graus_{nome_rede}.png")
 
     graus = sorted(frequencias.keys())
     valores = [frequencias[g] for g in graus]
@@ -34,9 +40,11 @@ def plotar_distribuicao_graus(frequencias):
     plt.title("Distribuição dos Graus")
 
     plt.savefig(
-        "distribuicao_graus.png",
+        nome_arquivo,
         dpi=300,
         bbox_inches="tight"
     )
 
-    print("Gráfico salvo em distribuicao_graus.png")
+    plt.close()
+
+    print(f"\nGráfico salvo em {nome_arquivo}")

@@ -1,5 +1,6 @@
 import os
 from collections import deque
+import analise_rede as ar
 
 '''função que lê um arquivo de texto e extrai os autores de cada linha,  armazenando-os em uma lista de publicações.
 Cada linha do arquivo é esperada estar no formato "autor1; autor2; autor3", onde os autores são separados por ponto e vírgula.
@@ -260,7 +261,9 @@ def limpar_terminal():
 com as principais informações e métricas da rede de coautoria,
 como estatísticas gerais, HUBs, pesquisadores mais influentes
 e comunidades encontradas.'''
-def gerar_relatorio_md(grafo, metricas):
+def gerar_relatorio_md(grafo, metricas, nome_rede):
+
+    nome_arquivo = (f"resultados/relatorio_{nome_rede}.md")
 
     hubs, grau_hub = encontrar_hubs(metricas)
     influentes, peso_influente = encontrar_mais_influente(metricas)
@@ -269,7 +272,7 @@ def gerar_relatorio_md(grafo, metricas):
 
     comunidades = encontrar_comunidades(grafo)
 
-    with open("relatorio.md", "w", encoding="utf-8") as arquivo:
+    with open(nome_arquivo, "w", encoding="utf-8") as arquivo:
 
         arquivo.write("# Relatório de Análise da Rede de Coautoria\n\n")
 
@@ -316,7 +319,7 @@ def gerar_relatorio_md(grafo, metricas):
             arquivo.write("\n")
 
     print("\nRelatório gerado com sucesso!")
-    print("Arquivo salvo como relatorio.md")
+    print(f"Arquivo salvo como {nome_arquivo}")
 
 '''função que exibe um menu para o usuáro com opções de funcionalidades do programa'''
 def menu():
@@ -329,6 +332,6 @@ def menu():
     print("6. Pesquisadores mais Influentes")
     print("7. Distância Média e Diâmetro")
     print("8. Análise de Comunidades")
-    print("9. 9. Análise da Distribuição dos Graus e Gráfico")
+    print("9. Análise da Distribuição dos Graus e Gráfico")
     print("10. Gerar Relátorio")
     print("0. Sair")

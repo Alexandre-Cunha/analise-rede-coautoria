@@ -1,24 +1,35 @@
 import functions as fn
 import analise_rede as ar
+import os
 
 publicacoes = None
 grafo = None
 metricas = None
+arquivo_atual = None
 
 while True:
     fn.menu()
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
-            nome_arquivo = input("Digite o nome do arquivo: ")
-            publicacoes = fn.carregar_arquivo(nome_arquivo)
 
-            if publicacoes:
-                grafo = fn.criar_grafo(publicacoes)
-                metricas = fn.calcular_metricas(grafo)
-                print("\nArquivo carregado com sucesso!")
-            else:
-                print("\nNenhuma publicação foi carregada.")
+        print("\nArquivos disponíveis:")
+
+        for arquivo in os.listdir("dados"):
+            print(f"- {arquivo}")
+
+        nome_arquivo = input("\nDigite o nome do arquivo: ")
+        arquivo_atual = nome_arquivo.replace(".txt", "")
+        caminho = f"dados/{nome_arquivo}"
+
+        publicacoes = fn.carregar_arquivo(caminho)
+
+        if publicacoes:
+            grafo = fn.criar_grafo(publicacoes)
+            metricas = fn.calcular_metricas(grafo)
+            print("\nArquivo carregado com sucesso!")
+        else:
+            print("\nNenhuma publicação foi carregada.")
 
     elif opcao == "2":
         if grafo is None:
@@ -118,13 +129,13 @@ while True:
         for grau, freq in sorted(frequencias.items()):
             print(f"Grau {grau}: {freq} pesquisadores")
 
-        ar.plotar_distribuicao_graus(frequencias)
+        ar.plotar_distribuicao_graus(frequencias, arquivo_atual)
     
     elif opcao == "10":
         if grafo is None:
             print("Carregue um arquivo primeiro.")
             continue
-        fn.gerar_relatorio_md(grafo, metricas)
+        fn.gerar_relatorio_md(grafo, metricas, arquivo_atual)
 
     elif opcao == "0":
         print("Saindo...")
