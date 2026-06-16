@@ -1,6 +1,5 @@
 # Análise de Rede de Coautoria de Pesquisadores
 
-<<<<<<< HEAD
 Trabalho Prático da disciplina **AEDS III**, desenvolvido para análise de redes de coautoria acadêmica utilizando conceitos de Teoria dos Grafos.
 
 ##  Sobre o Projeto
@@ -26,33 +25,6 @@ A partir dessa rede, o sistema calcula diversas métricas e estatísticas para a
 - Criação de um grafo não direcionado ponderado.
 
 ###  Estatísticas da Rede
-=======
-Trabalho Prático da disciplina **Algoritmos e Estruturas de Dados III (AEDS III)**, desenvolvido para análise de redes de colaboração acadêmica utilizando conceitos de Teoria dos Grafos.
-
-## Sobre o Projeto
-
-O sistema lê um arquivo contendo publicações acadêmicas e constrói uma **rede de coautoria ponderada**, onde:
-
-- Cada vértice representa um pesquisador.
-- Cada aresta representa uma colaboração entre dois pesquisadores.
-- O peso da aresta representa a quantidade de publicações realizadas em conjunto.
-
-A partir dessa rede, são calculadas métricas e estatísticas que permitem analisar a estrutura das colaborações acadêmicas.
-
----
-
-## Funcionalidades
-
-### Carregamento de Dados
-- Leitura de arquivos `.txt` armazenados na pasta `dados/`.
-- Validação de publicações contendo de 2 a 4 autores.
-
-### Construção do Grafo
-- Geração automática dos pares de coautores.
-- Construção de um grafo não direcionado ponderado.
-
-### Estatísticas da Rede
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 - Quantidade de pesquisadores.
 - Quantidade de arestas distintas.
 - Coeficiente de agrupamento médio.
