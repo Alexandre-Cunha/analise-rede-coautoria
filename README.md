@@ -29,7 +29,6 @@ A partir dessa rede, o sistema calcula diversas métricas e estatísticas para a
 - Quantidade de arestas distintas.
 - Coeficiente de agrupamento médio.
 
-<<<<<<< HEAD
 ###  Métricas por Pesquisador
 - Grau (número de colaboradores diretos).
 - Peso total das colaborações.
@@ -64,65 +63,13 @@ A partir dessa rede, o sistema calcula diversas métricas e estatísticas para a
 ├── requirements.txt        # Dependências do projeto
 ├── arquivo3.txt            # Exemplo de entrada
 └── distribuicao_graus.png  # Gráfico gerado pelo sistema
-=======
-### Métricas dos Pesquisadores
-- Grau de cada pesquisador.
-- Peso total das colaborações.
-
-### Identificação de Pesquisadores Relevantes
-- HUBs da rede (maior grau).
-- Pesquisadores mais influentes (maior peso total).
-
-### Análise de Distâncias
-- Distância média entre pesquisadores.
-- Diâmetro da rede.
-- Utilização de Busca em Largura (BFS).
-
-### Análise de Comunidades
-- Identificação de componentes conexos.
-- Utilização de Busca em Profundidade (DFS).
-
-### Distribuição dos Graus
-- Coleta dos graus dos vértices.
-- Cálculo da frequência dos graus.
-- Geração automática de gráfico da distribuição dos graus.
-
-### Relatórios
-- Geração automática de relatório em Markdown contendo os principais resultados da análise.
-
----
-
-## Estrutura do Projeto
-
-```text
-analise-rede-coautoria/
-│
-├── dados/
-│   └── arquivos de entrada (.txt)
-│
-├── resultados/
-│   ├── relatórios gerados (.md)
-│   └── gráficos gerados (.png)
-│
-├── main.py
-├── functions.py
-├── analise_rede.py
-├── requirements.txt
-└── README.md
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 ```
 
 ---
 
-<<<<<<< HEAD
 ##  Formato do Arquivo de Entrada
 
 Cada linha representa uma publicação e contém de 2 a 4 autores separados por ponto e vírgula.
-=======
-## Formato do Arquivo de Entrada
-
-Cada linha representa uma publicação e deve conter entre 2 e 4 autores separados por ponto e vírgula.
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 Exemplo:
 
@@ -135,51 +82,22 @@ Marcos Vinicius; Ana Clara
 
 ---
 
-<<<<<<< HEAD
 ##  Como Executar:
 
 ### 1. Clone o repositório
-=======
-## Como Executar
-
-### 1. Clone o Repositório
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 ```bash
 git clone https://github.com/Alexandre-Cunha/analise-rede-coautoria.git
 cd analise-rede-coautoria
 ```
 
-<<<<<<< HEAD
 ### 2. Instale as dependências
-=======
-### 2. Crie um Ambiente Virtual (Opcional)
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Instale as Dependências
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 ```bash
 pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
 ### 3. Execute o programa
-=======
-### 4. Adicione os Arquivos de Entrada
-
-Coloque os arquivos `.txt` na pasta:
-
-```text
-dados/
-```
-
-### 5. Execute o Programa
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 ```bash
 python main.py
@@ -187,17 +105,12 @@ python main.py
 
 ---
 
-<<<<<<< HEAD
 ##  Menu de Funcionalidades
-=======
-## Menu de Funcionalidades
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 | Opção | Funcionalidade |
 |---------|---------------|
 | 1 | Carregar arquivo |
 | 2 | Exibir grafo |
-<<<<<<< HEAD
 | 3 | Exibir estatísticas |
 | 4 | Exibir métricas dos pesquisadores |
 | 5 | Identificar hubs |
@@ -205,60 +118,22 @@ python main.py
 | 7 | Distância média e diâmetro |
 | 8 | Análise de comunidades |
 | 9 | Distribuição de graus |
-=======
-| 3 | Estatísticas da rede |
-| 4 | Métricas dos pesquisadores |
-| 5 | Encontrar HUBs |
-| 6 | Pesquisadores mais influentes |
-| 7 | Distância média e diâmetro |
-| 8 | Análise de comunidades |
-| 9 | Distribuição dos graus |
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 | 10 | Gerar relatório |
 | 0 | Sair |
 
 ---
 
-<<<<<<< HEAD
 ##  Tecnologias Utilizadas
-=======
-## Arquivos Gerados
-
-Os resultados produzidos pelo sistema são armazenados automaticamente na pasta:
-
-```text
-resultados/
-```
-
-Exemplos:
-
-```text
-resultados/
-├── relatorio_publicacoes.md
-├── relatorio_rede_teste.md
-├── distribuicao_graus_publicacoes.png
-└── distribuicao_graus_rede_teste.png
-```
-
----
-
-## Tecnologias Utilizadas
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 
 - Python 3
 - Matplotlib
 - Estruturas de Dados
 - Teoria dos Grafos
-<<<<<<< HEAD
-=======
-- Grafos Ponderados
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
 - Busca em Largura (BFS)
 - Busca em Profundidade (DFS)
 
 ---
 
-<<<<<<< HEAD
 ##  Objetivo Acadêmico
 
 Este projeto foi desenvolvido para aplicar conceitos de:
@@ -277,25 +152,3 @@ Este projeto foi desenvolvido para aplicar conceitos de:
 **Alexandre Manoel Barreto da Cunha**
 
 Trabalho desenvolvido para a disciplina **Algoritmos e Estruturas de Dados III (AEDS III)** – UFVJM.
-=======
-## Conceitos Aplicados
-
-Este projeto aplica conceitos estudados em:
-
-- Teoria dos Grafos
-- Redes Sociais
-- Redes Complexas
-- Análise de Colaboração Acadêmica
-- Componentes Conexos
-- Métricas de Centralidade
-- Análise de Distâncias
-- Visualização de Dados
-
----
-
-## Autor
-
-**Alexandre Manoel Barreto da Cunha**
-
-Desenvolvido para a disciplina **Algoritmos e Estruturas de Dados III (AEDS III)** da UFVJM.
->>>>>>> 439ffc5 (feat: reorganizar estrutura do projeto)
