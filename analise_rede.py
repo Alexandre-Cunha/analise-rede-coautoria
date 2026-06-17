@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from datetime import datetime
+import networkx as nx
+import os
 
 '''Função responsável por calcular a distribuição dos graus da rede.
 Ela conta quantos pesquisadores possuem cada valor de grau e
@@ -19,8 +20,6 @@ def distribuicao_graus(grafo):
 
     return frequencias
 
-def gerar_timestamp():
-    return datetime.now().strftime("%Y%m%d_%H%M%S")
 
 '''Função responsável por gerar um gráfico de barras da distribuição
 dos graus da rede. O eixo x representa os graus dos pesquisadores
@@ -48,3 +47,91 @@ def plotar_distribuicao_graus(frequencias, nome_rede):
     plt.close()
 
     print(f"\nGráfico salvo em {nome_arquivo}")
+
+'''Função responsável por gerar uma imagem da rede de coautoria.
+Os nós representam pesquisadores e as arestas representam
+colaborações entre eles.'''
+def gerar_imagem_grafo(grafo, nome_rede):
+
+    os.makedirs("resultados", exist_ok=True)
+    nome_arquivo = f"resultados/grafo_{nome_rede}.png"
+
+    G = nx.Graph()
+
+    for autor in grafo:
+
+        for vizinho, peso in grafo[autor].items():
+
+            G.add_edge(
+
+                autor,
+
+                vizinho,
+
+                weight=peso
+
+            )
+            
+    plt.figure(figsize=(14, 10))
+
+    pos = nx.spring_layout(
+        G,
+        seed=42,
+        k=1.2
+    )
+
+    node_sizes = [
+        300 + (100 * G.degree(n))
+        for n in G.nodes()
+    ]
+
+    node_colors = [
+        G.degree(n)
+        for n in G.nodes()
+    ]
+
+    edge_widths = [
+        G[u][v]["weight"] * 0.5
+        for u, v in G.edges()
+    ]
+
+    nx.draw_networkx_nodes(
+        G,
+        pos,
+        node_size=node_sizes,
+        node_color=node_colors,
+        cmap=plt.cm.viridis,
+        alpha=0.9
+    )
+
+    nx.draw_networkx_edges(
+        G,
+        pos,
+        width=edge_widths,
+        edge_color="gray",
+        alpha=0.4
+    )
+
+    nx.draw_networkx_labels(
+        G,
+        pos,
+        font_size=8,
+        font_weight="bold"
+    )
+
+    plt.title(
+        f"Grafo - Rede de Co-autoria",
+        fontsize=16
+    )
+
+    plt.savefig(
+    nome_arquivo,
+    dpi=300,
+    bbox_inches="tight"
+)
+
+    plt.axis("off")
+    plt.tight_layout()
+    plt.close()
+
+    print(f"\nGrafo salvo em {nome_arquivo}")

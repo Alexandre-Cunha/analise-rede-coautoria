@@ -132,10 +132,28 @@ while True:
         ar.plotar_distribuicao_graus(frequencias, arquivo_atual)
     
     elif opcao == "10":
+
         if grafo is None:
             print("Carregue um arquivo primeiro.")
             continue
-        fn.gerar_relatorio_md(grafo, metricas, arquivo_atual)
+
+        fn.gerar_relatorio_md(
+            grafo,
+            metricas,
+            arquivo_atual
+        )
+
+        frequencias = ar.distribuicao_graus(grafo)
+
+        ar.plotar_distribuicao_graus(
+            frequencias,
+            arquivo_atual
+        )
+
+        ar.gerar_imagem_grafo(
+            grafo,
+            arquivo_atual
+        )
 
     elif opcao == "0":
         print("Saindo...")

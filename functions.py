@@ -332,6 +332,6 @@ def menu():
     print("6. Pesquisadores mais Influentes")
     print("7. Distância Média e Diâmetro")
     print("8. Análise de Comunidades")
-    print("9. Análise da Distribuição dos Graus e Gráfico")
-    print("10. Gerar Relátorio")
+    print("9. Análise da Distribuição dos Graus")
+    print("10. Gerar Relátorio Completo")
     print("0. Sair")
